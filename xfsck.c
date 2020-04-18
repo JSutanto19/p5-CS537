@@ -63,6 +63,12 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
+	// if(sb->size >= sb->nblocks + sb->ninodes/IPB + 4){
+    //     fprintf(stderr, "%s", "ERROR: superblock is corrupted.\n");
+    //     exit(1);
+	// }
+
+
     for (int i=0; i < sb->ninodes; i++) {
     	if (dip[i].type < 0 || dip[i].type > 3){
     	    fprintf(stderr, "%s", "ERROR: bad inode.\n");
@@ -115,6 +121,48 @@ int main(int argc, char *argv[]) {
     	    }
     	}
     }	
+
+
+	//test 8
+    for(int i = 0; i < sb->ninodes; i++){
+	   
+	   int totalBlks = 0;
+	  
+	   if(dip[i].type > 0 && dip[i].type <= 3 && dip[i].size > 0){
+          
+		  for(int j = 0; j < NDIRECT; j++ ){
+			  
+			  if(dip[i].addrs[j] != 0){
+				  totalBlks++;
+			  }
+
+		  }
+		  
+		  if(dip[i].addrs[NDIRECT] != 0){
+                
+				for(int k = 0; k < NINDIRECT; k++){
+					
+					uint* p = (uint *) (img_ptr + dip[i].addrs[NDIRECT] * BSIZE);
+					
+					if(p[k] != 0){
+						totalBlks++;
+					}
+				}
+		  }
+
+		  if( dip[i].size  < (totalBlks-1) * BSIZE || dip[i].size > (totalBlks * BSIZE)){
+		    //printf("index: %d\n", i);
+			//printf("%d\n",dip[i].size);
+	        //printf("%d\n",totalBlks);
+			//printf("here\n");
+
+		   fprintf(stderr, "%s", "ERROR: incorrect file size in inode.\n");
+		   exit(1);
+	      }
+	   } else{
+		   continue;
+	   }
+	}
 
     // Checking if dir is properly formatted
     for (int i=0; i < sb->ninodes; i++) {
@@ -184,6 +232,9 @@ int main(int argc, char *argv[]) {
     	}
     }
 
+	   
+    
+
 	// Tests 9-12 Pre processing
 	// What if some entry in a directory pointing to inode 0, is the file inconsistent?
 	// That is why we are starting from 1 in the loops below
@@ -213,11 +264,7 @@ int main(int argc, char *argv[]) {
         }
 	}
     
-    //test 8
     
-    for(int i = 1; i < sb->ninodes; i++){
-       
-    }
 
 	// test 9
 	for(int i = 1; i < sb->ninodes; i++) {
@@ -255,4 +302,6 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
+	
+	
 }

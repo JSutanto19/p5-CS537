@@ -17,6 +17,7 @@ gcc xfsck.c -iquote/u/c/s/cs537-1/xv6-sp20/include -o xfsck
 
 test build PASSED
  (build project using make)
+ file 'xfsck' exists after make clean, removing
 
 starting Good
 
@@ -26,7 +27,7 @@ Test Good
 run on a good filesystem
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Good
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Good
 
 
 test Good PASSED (2 of 2)
@@ -40,7 +41,7 @@ Test Goodrefcnt
 run on fs with only good reference counts
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrefcnt
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrefcnt
 
 
 test Goodrefcnt PASSED (2 of 2)
@@ -54,7 +55,7 @@ Test Nonexistant
 run on a nonexistant filesystem
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Nonexistant
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Nonexistant
 
 
 test Nonexistant PASSED (2 of 2)
@@ -68,7 +69,7 @@ Test Superblock
 run on a filesystem with corrupted superblock
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Superblock
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Superblock
 
 
 test Superblock PASSED (2 of 2)
@@ -82,13 +83,11 @@ Test Badsize
 run on a filesystem with a bad file size in an inode
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badsize
-Failure: ./xfsck returned incorrect status code. Expected 1 got 0
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badsize
 
 
-test Badsize FAILED (0 of 5)
+test Badsize PASSED (5 of 5)
  (run on a filesystem with a bad file size in an inode)
- ./xfsck returned incorrect status code. Expected 1 got 0
 
 starting Badinode
 
@@ -98,7 +97,7 @@ Test Badinode
 run on a filesystem with a bad type in an inode
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badinode
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badinode
 
 
 test Badinode PASSED (5 of 5)
@@ -112,7 +111,7 @@ Test Badaddr
 run on a filesystem with a bad direct address in an inode
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badaddr
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badaddr
 
 
 test Badaddr PASSED (5 of 5)
@@ -126,7 +125,7 @@ Test Badindir1
 run on a filesystem with a bad indirect address in an inode
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badindir1
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badindir1
 
 
 test Badindir1 PASSED (5 of 5)
@@ -140,7 +139,7 @@ Test Badfmt
 run on a filesystem without . or .. directories
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badfmt
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badfmt
 
 
 test Badfmt PASSED (5 of 5)
@@ -154,7 +153,7 @@ Test Mrkfree
 run on a filesystem with an inuse direct block marked free
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Mrkfree
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Mrkfree
 
 
 test Mrkfree PASSED (5 of 5)
@@ -168,7 +167,7 @@ Test Indirfree
 run on a filesystem with an inuse indirect block marked free
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Indirfree
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Indirfree
 
 
 test Indirfree PASSED (5 of 5)
@@ -182,7 +181,7 @@ Test Mrkused
 run on a filesystem with a free block marked used
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Mrkused
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Mrkused
 
 
 test Mrkused PASSED (5 of 5)
@@ -196,7 +195,7 @@ Test Addronce
 run on a filesystem with an address used more than once
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Addronce
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Addronce
 
 
 test Addronce PASSED (5 of 5)
@@ -210,7 +209,7 @@ Test Imrkused
 run with inode marked used, but not referenced in a directory
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Imrkused
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Imrkused
 
 
 test Imrkused PASSED (5 of 5)
@@ -224,7 +223,7 @@ Test Imrkfree
 run with inode marked free, but referenced in a directory
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Imrkfree
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Imrkfree
 
 
 test Imrkfree PASSED (5 of 5)
@@ -238,7 +237,7 @@ Test Badrefcnt
 run on fs which has an inode with a bad reference count
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badrefcnt
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badrefcnt
 
 
 test Badrefcnt PASSED (5 of 5)
@@ -252,7 +251,7 @@ Test Badindir2
 run on a filesystem with a bad indirect address in an inode
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badindir2
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badindir2
 
 
 test Badindir2 PASSED (5 of 5)
@@ -266,7 +265,7 @@ Test Dironce
 run on fs with a directory appearing more than once
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Dironce
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Dironce
 
 
 test Dironce PASSED (5 of 5)
@@ -280,7 +279,7 @@ Test Goodrm
 run on good fs with a file removed and a new directory created
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrm
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrm
 
 
 test Goodrm PASSED (3 of 3)
@@ -294,7 +293,7 @@ Test Goodrm2
 run on good fs with a new directory created and then a file removed
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrm2
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrm2
 
 
 test Goodrm2 PASSED (3 of 3)
@@ -308,7 +307,7 @@ Test Goodlink
 run on good fs with some hard links and a linked file removed
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodlink
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodlink
 
 
 test Goodlink PASSED (3 of 3)
@@ -322,7 +321,7 @@ Test Goodlarge
 run on large good fs
 
 **********************************************************************
-/tmp/tmpWwRIEI/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodlarge
+/tmp/tmp9VWGzv/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodlarge
 
 
 test Goodlarge PASSED (3 of 3)
@@ -332,6 +331,7 @@ test Goodlarge PASSED (3 of 3)
 Summary:
 test build PASSED
  (build project using make)
+ file 'xfsck' exists after make clean, removing
 
 test Good PASSED (2 of 2)
  (run on a good filesystem)
@@ -345,9 +345,8 @@ test Nonexistant PASSED (2 of 2)
 test Superblock PASSED (2 of 2)
  (run on a filesystem with corrupted superblock)
 
-test Badsize FAILED (0 of 5)
+test Badsize PASSED (5 of 5)
  (run on a filesystem with a bad file size in an inode)
- ./xfsck returned incorrect status code. Expected 1 got 0
 
 test Badinode PASSED (5 of 5)
  (run on a filesystem with a bad type in an inode)
@@ -400,6 +399,6 @@ test Goodlink PASSED (3 of 3)
 test Goodlarge PASSED (3 of 3)
  (run on large good fs)
 
-Passed 22 of 23 tests.
-Overall 22 of 23
-Points 85 of 90
+Passed 23 of 23 tests.
+Overall 23 of 23
+Points 90 of 90
