@@ -140,8 +140,6 @@ int main(int argc, char * argv[]) {
                 fprintf(stderr, "%s", "ERROR: incorrect file size in inode.\n");
                 exit(1);
             }
-        } else {
-            continue;
         }
     }
 
@@ -157,29 +155,29 @@ int main(int argc, char * argv[]) {
     }
 
     //Test 5
-    char * bitmap_start = (char * )(img_ptr + 3 * BSIZE + ((sb -> ninodes / IPB) * BSIZE));
+    char * startBitmap = (char * )(img_ptr + 3 * BSIZE + ((sb -> ninodes / IPB) * BSIZE));
     for (int i = 0; i < sb -> ninodes; i++) {
         if (dip[i].type > 0 && dip[i].type <= 3) {
             for (int j = 0; j < NDIRECT + 1; j++) {
                 if (dip[i].addrs[j] == 0) {
                     continue;
                 }
-                uint bitmap_array_pos = (dip[i].addrs[j]) / 8;
-                uint bit_position_within_byte = (dip[i].addrs[j]) % 8;
-                if (((bitmap_start[bitmap_array_pos] >> bit_position_within_byte) & 1) == 0) {
+                uint bitArrPos = (dip[i].addrs[j]) / 8;
+                uint bitPos = (dip[i].addrs[j]) % 8;
+                if (((startBitmap[bitArrPos] >> bitPos) & 1) == 0) {
                     fprintf(stderr, "%s", "ERROR: address used by inode but marked free in bitmap.\n");
                     exit(1);
                 }
             }
             uint * indirect = (uint * )(img_ptr + BSIZE * dip[i].addrs[NDIRECT]);
             for (int x = 0; x < NINDIRECT; x++) {
-                uint indirect_addr = indirect[x];
-                if (indirect_addr == 0) {
+                uint indirectAddr = indirect[x];
+                if (indirectAddr == 0) {
                     continue;
                 }
-                uint bitmap_array_pos = (indirect_addr) / 8;
-                uint bit_position_within_byte = (indirect_addr) % 8;
-                if (((bitmap_start[bitmap_array_pos] >> bit_position_within_byte) & 1) == 0) {
+                uint bitArrPos = (indirectAddr) / 8;
+                uint bitPos = (indirectAddr) % 8;
+                if (((startBitmap[bitArrPos] >> bitPos) & 1) == 0) {
                     fprintf(stderr, "%s", "ERROR: address used by inode but marked free in bitmap.\n");
                     exit(1);
                 }
@@ -189,14 +187,15 @@ int main(int argc, char * argv[]) {
 
     //Test 6
     for (int i = 0; i < sb -> nblocks; i++) {
-        uint bitmap_array_pos = (i + startData_number) / 8;
-        uint bit_position_within_byte = (i + startData_number) % 8;
-        if (((bitmap_start[bitmap_array_pos] >> bit_position_within_byte) & 1) == 1 && usedBlocks[i + startData_number] != 1) {
+        uint bitArrPos = (i + startData_number) / 8;
+        uint bitPos = (i + startData_number) % 8;
+        if (((startBitmap[bitArrPos] >> bitPos) & 1) == 1 && usedBlocks[i + startData_number] != 1) {
             fprintf(stderr, "%s", "ERROR: bitmap marks block in use but it is not in use.\n");
             exit(1);
         }
     }
 
+    //Read through the image and save important things
     for (int i = 0; i < sb -> ninodes; i++) {
         if (dip[i].type == 1) {
             for (int x = 0; x < NDIRECT; x++) {
@@ -225,38 +224,30 @@ int main(int argc, char * argv[]) {
 
     // test 9
     for (int i = 1; i < sb -> ninodes; i++) {
-        if (dip[i].type > 0 && dip[i].type <= 3) {
-            if (usedInodes[i] == 0) {
-                fprintf(stderr, "%s", "ERROR: inode marked used but not found in a directory.\n");
-                exit(1);
-            }
+        if (dip[i].type > 0 && dip[i].type <= 3 && usedInodes[i] == 0) {
+            fprintf(stderr, "%s", "ERROR: inode marked used but not found in a directory.\n");
+            exit(1);
         }
     }
     // test 10
     for (int i = 1; i < sb -> ninodes; i++) {
-        if (usedInodes[i] != 0) {
-            if (dip[i].type == 0) {
-                fprintf(stderr, "%s", "ERROR: inode referred to in directory but marked free.\n");
-                exit(1);
-            }
+        if (usedInodes[i] != 0 && dip[i].type == 0) {
+            fprintf(stderr, "%s", "ERROR: inode referred to in directory but marked free.\n");
+            exit(1);
         }
     }
     // test 11
     for (int i = 1; i < sb -> ninodes; i++) {
-        if (dip[i].type == 2) {
-            if (usedInodes[i] != dip[i].nlink) {
-                fprintf(stderr, "%s", "ERROR: bad reference count for file.\n");
-                exit(1);
-            }
+        if (dip[i].type == 2 && usedInodes[i] != dip[i].nlink) {
+            fprintf(stderr, "%s", "ERROR: bad reference count for file.\n");
+            exit(1);
         }
     }
     // test 12
     for (int i = 1; i < sb -> ninodes; i++) {
-        if (dip[i].type == 1) {
-            if (refDirectory[i] > 1) {
-                fprintf(stderr, "%s", "ERROR: directory appears more than once in file system.\n");
-                exit(1);
-            }
+        if (dip[i].type == 1 && refDirectory[i] > 1) {
+            fprintf(stderr, "%s", "ERROR: directory appears more than once in file system.\n");
+            exit(1);
         }
     }
 
@@ -271,7 +262,7 @@ int main(int argc, char * argv[]) {
     //Store reference for root directory
 
     for (int i = 0; i < sb -> ninodes; ++i) {
-        if (dip[i].type == 1) {
+       if (dip[i].type == 1) {
             //check if it reaches the parent
         }
     }
