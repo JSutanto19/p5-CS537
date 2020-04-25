@@ -77,43 +77,50 @@ int main(int argc, char * argv[]) {
     if ((sb -> nblocks) % (BSIZE * 8) > 0) {
         startData = startData + BSIZE;
     }
-    uint startData_number = (startData - img_ptr) / BSIZE;
-    for (int i = 0; i < sb -> ninodes; i++) {
-        if (dip[i].type > 0 && dip[i].type <= 3) {
-
-            for (int x = 0; x < NDIRECT; x++) {
-                if (dip[i].addrs[x] != 0 && (dip[i].addrs[x] < startData_number || dip[i].addrs[x] >= startData_number + sb -> nblocks)) {
+    uint startNum = (startData - img_ptr) / BSIZE;
+    
+    void directHelper(int i){
+         for (int x = 0; x < NDIRECT; x++) {
+                if ((dip[i].addrs[x] >= startNum + sb -> nblocks || dip[i].addrs[x] < startNum ) && dip[i].addrs[x] != 0) {
                     fprintf(stderr, "%s", "ERROR: bad direct address in inode.\n");
                     exit(1);
                 }
-                if ((dip[i].addrs[x] != 0) && usedBlocks[dip[i].addrs[x]] == 1) {
+                if (usedBlocks[dip[i].addrs[x]] == 1 && dip[i].addrs[x] != 0 ) {
                     fprintf(stderr, "%s", "ERROR: direct address used more than once.\n");
                     exit(1);
                 }
                 usedBlocks[dip[i].addrs[x]] = 1;
             }
+    }
 
-            if (dip[i].addrs[NDIRECT] != 0 && (dip[i].addrs[NDIRECT] < startData_number || dip[i].addrs[NDIRECT] >= startData_number + sb -> nblocks)) {
+    void indirectHelper(int i){
+        if ((dip[i].addrs[NDIRECT] >= startNum + sb -> nblocks || dip[i].addrs[NDIRECT] < startNum) && dip[i].addrs[NDIRECT] != 0) {
                 fprintf(stderr, "%s", "ERROR: bad indirect address in inode.\n");
                 exit(1);
             }
-            if ((dip[i].addrs[NDIRECT] != 0) && usedBlocks[dip[i].addrs[NDIRECT]] == 1) {
+            if ((usedBlocks[dip[i].addrs[NDIRECT]] == 1 && dip[i].addrs[NDIRECT] != 0)) {
                 fprintf(stderr, "%s", "ERROR: indirect address used more than once.\n");
                 exit(1);
             }
             usedBlocks[dip[i].addrs[NDIRECT]] = 1;
             uint * indirect = (uint * )(img_ptr + BSIZE * dip[i].addrs[NDIRECT]);
             for (int x = 0; x < NINDIRECT; x++) {
-                if (indirect[x] != 0 && (indirect[x] < startData_number || indirect[x] >= startData_number + sb -> nblocks)) {
+                if (indirect[x] != 0 && (indirect[x] >= startNum + sb -> nblocks || indirect[x] < startNum)) {
                     fprintf(stderr, "%s", "ERROR: bad indirect address in inode.\n");
                     exit(1);
                 }
-                if ((indirect[x] != 0) && usedBlocks[indirect[x]] == 1) {
+                if (indirect[x] != 0 && usedBlocks[indirect[x]] == 1) {
                     fprintf(stderr, "%s", "ERROR: indirect address used more than once.\n");
                     exit(1);
                 }
                 usedBlocks[indirect[x]] = 1;
             }
+    }
+
+    for (int i = 0; i < sb -> ninodes; i++) {
+        if (dip[i].type > 0 && dip[i].type <= 3) {
+            directHelper(i);
+            indirectHelper(i);
         }
     }
 
@@ -154,101 +161,124 @@ int main(int argc, char * argv[]) {
         }
     }
 
-    //Test 5
     char * startBitmap = (char * )(img_ptr + 3 * BSIZE + ((sb -> ninodes / IPB) * BSIZE));
-    for (int i = 0; i < sb -> ninodes; i++) {
-        if (dip[i].type > 0 && dip[i].type <= 3) {
-            for (int j = 0; j < NDIRECT + 1; j++) {
-                if (dip[i].addrs[j] == 0) {
-                    continue;
-                }
-                uint bitArrPos = (dip[i].addrs[j]) / 8;
-                uint bitPos = (dip[i].addrs[j]) % 8;
-                if (((startBitmap[bitArrPos] >> bitPos) & 1) == 0) {
-                    fprintf(stderr, "%s", "ERROR: address used by inode but marked free in bitmap.\n");
-                    exit(1);
+    void bitDir(int i){
+        for (int j = 0; j < NDIRECT + 1; j++) {
+                if (dip[i].addrs[j] != 0) {
+                    uint bitArrPos = (dip[i].addrs[j]) / 8;
+                    uint bitPos = (dip[i].addrs[j]) % 8;
+                    if (((startBitmap[bitArrPos] >> bitPos) & 1) == 0) {
+                        fprintf(stderr, "%s", "ERROR: address used by inode but marked free in bitmap.\n");
+                        exit(1);
+                    }
                 }
             }
-            uint * indirect = (uint * )(img_ptr + BSIZE * dip[i].addrs[NDIRECT]);
+    }
+    
+    void bitIndirect(int i){
+         uint * indirect = (uint * )(img_ptr + BSIZE * dip[i].addrs[NDIRECT]);
             for (int x = 0; x < NINDIRECT; x++) {
                 uint indirectAddr = indirect[x];
-                if (indirectAddr == 0) {
-                    continue;
-                }
-                uint bitArrPos = (indirectAddr) / 8;
-                uint bitPos = (indirectAddr) % 8;
-                if (((startBitmap[bitArrPos] >> bitPos) & 1) == 0) {
-                    fprintf(stderr, "%s", "ERROR: address used by inode but marked free in bitmap.\n");
-                    exit(1);
+                if (indirectAddr != 0) {
+                    uint bitArrPos = (indirectAddr) / 8;
+                    uint bitPos = (indirectAddr) % 8;
+                    if (((startBitmap[bitArrPos] >> bitPos) & 1) == 0) {
+                        fprintf(stderr, "%s", "ERROR: address used by inode but marked free in bitmap.\n");
+                        exit(1);
+                    }
                 }
             }
+    }
+    
+    for (int i = 0; i < sb -> ninodes; i++) {
+        if (dip[i].type > 0 && dip[i].type <= 3) {
+            bitDir(i);
+            bitIndirect(i);
         }
     }
 
     //Test 6
     for (int i = 0; i < sb -> nblocks; i++) {
-        uint bitArrPos = (i + startData_number) / 8;
-        uint bitPos = (i + startData_number) % 8;
-        if (((startBitmap[bitArrPos] >> bitPos) & 1) == 1 && usedBlocks[i + startData_number] != 1) {
+        uint bitArrPos = (i + startNum) / 8;
+        uint bitPos = (i + startNum) % 8;
+        if (((startBitmap[bitArrPos] >> bitPos) & 1) == 1 && usedBlocks[i + startNum] != 1) {
             fprintf(stderr, "%s", "ERROR: bitmap marks block in use but it is not in use.\n");
             exit(1);
         }
     }
 
+    void isDir(int i){
+        uint * indirect = (uint * )(img_ptr + BSIZE * dip[i].addrs[NDIRECT]);
+            for (int x = 0; x < NINDIRECT; x++) {
+                if (indirect[x] != 0){
+                    struct xv6_dirent * dirEntry = (struct xv6_dirent * )(img_ptr + indirect[x] * BSIZE);
+                    for (int j = 0; j < (BSIZE / sizeof(struct xv6_dirent)); j++) {
+                        usedInodes[dirEntry[j].inum] += 1;
+                        refDirectory[dirEntry[j].inum] += 1;
+                    }
+                }
+            }
+    }
+
+    void noDir(int i){
+         for (int x = 0; x < NDIRECT; x++) {
+                if (dip[i].addrs[x] != 0){
+                    struct xv6_dirent * dirEntry = (struct xv6_dirent * )(img_ptr + dip[i].addrs[x] * BSIZE);
+                    for (int j = 0; j < (BSIZE / sizeof(struct xv6_dirent)); j++) {
+                        if (j > 1 || x > 0) {
+                            refDirectory[dirEntry[j].inum] += 1;
+                        }
+                        usedInodes[dirEntry[j].inum] += 1;
+                    }
+                }
+            }
+    }
     //Read through the image and save important things
     for (int i = 0; i < sb -> ninodes; i++) {
         if (dip[i].type == 1) {
-            for (int x = 0; x < NDIRECT; x++) {
-                if (dip[i].addrs[x] == 0)
-                    continue;
-                struct xv6_dirent * dirEntry = (struct xv6_dirent * )(img_ptr + dip[i].addrs[x] * BSIZE);
-                for (int j = 0; j < (BSIZE / sizeof(struct xv6_dirent)); j++) {
-                    if (x > 0 || j > 1) {
-                        refDirectory[dirEntry[j].inum] += 1;
-                    }
-                    usedInodes[dirEntry[j].inum] += 1;
-                }
-            }
-            uint * indirect = (uint * )(img_ptr + BSIZE * dip[i].addrs[NDIRECT]);
-            for (int x = 0; x < NINDIRECT; x++) {
-                if (indirect[x] == 0)
-                    continue;
-                struct xv6_dirent * dirEntry = (struct xv6_dirent * )(img_ptr + indirect[x] * BSIZE);
-                for (int j = 0; j < (BSIZE / sizeof(struct xv6_dirent)); j++) {
-                    usedInodes[dirEntry[j].inum] += 1;
-                    refDirectory[dirEntry[j].inum] += 1;
-                }
-            }
+            isDir(i);
+            noDir(i);
         }
     }
-
-    // test 9
-    for (int i = 1; i < sb -> ninodes; i++) {
-        if (dip[i].type > 0 && dip[i].type <= 3 && usedInodes[i] == 0) {
+    void test9 (int i){
+         if (dip[i].type > 0 && dip[i].type <= 3 && usedInodes[i] == 0) {
             fprintf(stderr, "%s", "ERROR: inode marked used but not found in a directory.\n");
             exit(1);
         }
     }
-    // test 10
-    for (int i = 1; i < sb -> ninodes; i++) {
-        if (usedInodes[i] != 0 && dip[i].type == 0) {
+    void test10 (int i){
+          if (usedInodes[i] != 0 && dip[i].type == 0) {
             fprintf(stderr, "%s", "ERROR: inode referred to in directory but marked free.\n");
             exit(1);
         }
     }
-    // test 11
-    for (int i = 1; i < sb -> ninodes; i++) {
-        if (dip[i].type == 2 && usedInodes[i] != dip[i].nlink) {
+    void test11 (int i){
+         if (dip[i].type == 2 && usedInodes[i] != dip[i].nlink) {
             fprintf(stderr, "%s", "ERROR: bad reference count for file.\n");
             exit(1);
         }
     }
-    // test 12
-    for (int i = 1; i < sb -> ninodes; i++) {
-        if (dip[i].type == 1 && refDirectory[i] > 1) {
+    void test12 (int i){
+         if (dip[i].type == 1 && refDirectory[i] > 1) {
             fprintf(stderr, "%s", "ERROR: directory appears more than once in file system.\n");
             exit(1);
         }
+    }
+    // test 9
+    for (int i = 1; i < sb -> ninodes; i++) {
+        test9(i);
+    }
+    // test 10
+    for (int i = 1; i < sb -> ninodes; i++) {
+       test10(i);
+    }
+    // test 11
+    for (int i = 1; i < sb -> ninodes; i++) {
+        test11(i);
+    }
+    // test 12
+    for (int i = 1; i < sb -> ninodes; i++) {
+        test12(i);
     }
 
     //accessible directory
