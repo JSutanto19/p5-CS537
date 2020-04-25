@@ -122,4 +122,3 @@ void print_inode(struct dinode dip) {
   printf("size:%d,", dip.size);
   printf("first_addr:%d\n", dip.addrs[0]);
 }
-

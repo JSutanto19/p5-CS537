@@ -12,12 +12,15 @@ make: *** No rule to make target 'clean'.  Stop.
 Trying to build project using make
 make
 make: *** No targets specified and no makefile found.  Stop.
-gcc xfsck.c -iquote/u/c/s/cs537-1/xv6-sp20/include -o xfsck
+gcc xfsck.c -o xfsck
+gcc: error: xfsck.c: No such file or directory
+gcc: fatal error: no input files
+compilation terminated.
 
 
 test build PASSED
  (build project using make)
- file 'xfsck' exists after make clean, removing
+ file 'mkfs.o' exists after make clean, removing
 
 starting Good
 
@@ -27,11 +30,13 @@ Test Good
 run on a good filesystem
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Good
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Good
+OSError: [Errno 2] No such file or directory
 
 
-test Good PASSED (2 of 2)
+test Good FAILED (0 of 2)
  (run on a good filesystem)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Goodrefcnt
 
@@ -41,11 +46,13 @@ Test Goodrefcnt
 run on fs with only good reference counts
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrefcnt
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrefcnt
+OSError: [Errno 2] No such file or directory
 
 
-test Goodrefcnt PASSED (2 of 2)
+test Goodrefcnt FAILED (0 of 2)
  (run on fs with only good reference counts)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Nonexistant
 
@@ -55,11 +62,13 @@ Test Nonexistant
 run on a nonexistant filesystem
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Nonexistant
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Nonexistant
+OSError: [Errno 2] No such file or directory
 
 
-test Nonexistant PASSED (2 of 2)
+test Nonexistant FAILED (0 of 2)
  (run on a nonexistant filesystem)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Superblock
 
@@ -69,11 +78,13 @@ Test Superblock
 run on a filesystem with corrupted superblock
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Superblock
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Superblock
+OSError: [Errno 2] No such file or directory
 
 
-test Superblock PASSED (2 of 2)
+test Superblock FAILED (0 of 2)
  (run on a filesystem with corrupted superblock)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Badsize
 
@@ -83,11 +94,13 @@ Test Badsize
 run on a filesystem with a bad file size in an inode
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badsize
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badsize
+OSError: [Errno 2] No such file or directory
 
 
-test Badsize PASSED (5 of 5)
+test Badsize FAILED (0 of 5)
  (run on a filesystem with a bad file size in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Badinode
 
@@ -97,11 +110,13 @@ Test Badinode
 run on a filesystem with a bad type in an inode
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badinode
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badinode
+OSError: [Errno 2] No such file or directory
 
 
-test Badinode PASSED (5 of 5)
+test Badinode FAILED (0 of 5)
  (run on a filesystem with a bad type in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Badaddr
 
@@ -111,11 +126,13 @@ Test Badaddr
 run on a filesystem with a bad direct address in an inode
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badaddr
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badaddr
+OSError: [Errno 2] No such file or directory
 
 
-test Badaddr PASSED (5 of 5)
+test Badaddr FAILED (0 of 5)
  (run on a filesystem with a bad direct address in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Badindir1
 
@@ -125,11 +142,13 @@ Test Badindir1
 run on a filesystem with a bad indirect address in an inode
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badindir1
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badindir1
+OSError: [Errno 2] No such file or directory
 
 
-test Badindir1 PASSED (5 of 5)
+test Badindir1 FAILED (0 of 5)
  (run on a filesystem with a bad indirect address in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Badfmt
 
@@ -139,11 +158,13 @@ Test Badfmt
 run on a filesystem without . or .. directories
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badfmt
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badfmt
+OSError: [Errno 2] No such file or directory
 
 
-test Badfmt PASSED (5 of 5)
+test Badfmt FAILED (0 of 5)
  (run on a filesystem without . or .. directories)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Mrkfree
 
@@ -153,11 +174,13 @@ Test Mrkfree
 run on a filesystem with an inuse direct block marked free
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Mrkfree
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Mrkfree
+OSError: [Errno 2] No such file or directory
 
 
-test Mrkfree PASSED (5 of 5)
+test Mrkfree FAILED (0 of 5)
  (run on a filesystem with an inuse direct block marked free)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Indirfree
 
@@ -167,11 +190,13 @@ Test Indirfree
 run on a filesystem with an inuse indirect block marked free
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Indirfree
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Indirfree
+OSError: [Errno 2] No such file or directory
 
 
-test Indirfree PASSED (5 of 5)
+test Indirfree FAILED (0 of 5)
  (run on a filesystem with an inuse indirect block marked free)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Mrkused
 
@@ -181,11 +206,13 @@ Test Mrkused
 run on a filesystem with a free block marked used
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Mrkused
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Mrkused
+OSError: [Errno 2] No such file or directory
 
 
-test Mrkused PASSED (5 of 5)
+test Mrkused FAILED (0 of 5)
  (run on a filesystem with a free block marked used)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Addronce
 
@@ -195,11 +222,13 @@ Test Addronce
 run on a filesystem with an address used more than once
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Addronce
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Addronce
+OSError: [Errno 2] No such file or directory
 
 
-test Addronce PASSED (5 of 5)
+test Addronce FAILED (0 of 5)
  (run on a filesystem with an address used more than once)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Imrkused
 
@@ -209,11 +238,13 @@ Test Imrkused
 run with inode marked used, but not referenced in a directory
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Imrkused
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Imrkused
+OSError: [Errno 2] No such file or directory
 
 
-test Imrkused PASSED (5 of 5)
+test Imrkused FAILED (0 of 5)
  (run with inode marked used, but not referenced in a directory)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Imrkfree
 
@@ -223,11 +254,13 @@ Test Imrkfree
 run with inode marked free, but referenced in a directory
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Imrkfree
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Imrkfree
+OSError: [Errno 2] No such file or directory
 
 
-test Imrkfree PASSED (5 of 5)
+test Imrkfree FAILED (0 of 5)
  (run with inode marked free, but referenced in a directory)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Badrefcnt
 
@@ -237,11 +270,13 @@ Test Badrefcnt
 run on fs which has an inode with a bad reference count
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badrefcnt
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badrefcnt
+OSError: [Errno 2] No such file or directory
 
 
-test Badrefcnt PASSED (5 of 5)
+test Badrefcnt FAILED (0 of 5)
  (run on fs which has an inode with a bad reference count)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Badindir2
 
@@ -251,11 +286,13 @@ Test Badindir2
 run on a filesystem with a bad indirect address in an inode
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badindir2
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Badindir2
+OSError: [Errno 2] No such file or directory
 
 
-test Badindir2 PASSED (5 of 5)
+test Badindir2 FAILED (0 of 5)
  (run on a filesystem with a bad indirect address in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Dironce
 
@@ -265,11 +302,13 @@ Test Dironce
 run on fs with a directory appearing more than once
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Dironce
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Dironce
+OSError: [Errno 2] No such file or directory
 
 
-test Dironce PASSED (5 of 5)
+test Dironce FAILED (0 of 5)
  (run on fs with a directory appearing more than once)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Goodrm
 
@@ -279,11 +318,13 @@ Test Goodrm
 run on good fs with a file removed and a new directory created
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrm
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrm
+OSError: [Errno 2] No such file or directory
 
 
-test Goodrm PASSED (3 of 3)
+test Goodrm FAILED (0 of 3)
  (run on good fs with a file removed and a new directory created)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Goodrm2
 
@@ -293,11 +334,13 @@ Test Goodrm2
 run on good fs with a new directory created and then a file removed
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrm2
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodrm2
+OSError: [Errno 2] No such file or directory
 
 
-test Goodrm2 PASSED (3 of 3)
+test Goodrm2 FAILED (0 of 3)
  (run on good fs with a new directory created and then a file removed)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Goodlink
 
@@ -307,11 +350,13 @@ Test Goodlink
 run on good fs with some hard links and a linked file removed
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodlink
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodlink
+OSError: [Errno 2] No such file or directory
 
 
-test Goodlink PASSED (3 of 3)
+test Goodlink FAILED (0 of 3)
  (run on good fs with some hard links and a linked file removed)
+ Unexpected exception [Errno 2] No such file or directory
 
 starting Goodlarge
 
@@ -321,84 +366,108 @@ Test Goodlarge
 run on large good fs
 
 **********************************************************************
-/tmp/tmpHTh_PR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodlarge
+/tmp/tmpWaa9VR/p/./xfsck /u/c/s/cs537-1/tests/p5/images/Goodlarge
+OSError: [Errno 2] No such file or directory
 
 
-test Goodlarge PASSED (3 of 3)
+test Goodlarge FAILED (0 of 3)
  (run on large good fs)
+ Unexpected exception [Errno 2] No such file or directory
 
 **********************************************************************
 Summary:
 test build PASSED
  (build project using make)
- file 'xfsck' exists after make clean, removing
+ file 'mkfs.o' exists after make clean, removing
 
-test Good PASSED (2 of 2)
+test Good FAILED (0 of 2)
  (run on a good filesystem)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Goodrefcnt PASSED (2 of 2)
+test Goodrefcnt FAILED (0 of 2)
  (run on fs with only good reference counts)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Nonexistant PASSED (2 of 2)
+test Nonexistant FAILED (0 of 2)
  (run on a nonexistant filesystem)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Superblock PASSED (2 of 2)
+test Superblock FAILED (0 of 2)
  (run on a filesystem with corrupted superblock)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Badsize PASSED (5 of 5)
+test Badsize FAILED (0 of 5)
  (run on a filesystem with a bad file size in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Badinode PASSED (5 of 5)
+test Badinode FAILED (0 of 5)
  (run on a filesystem with a bad type in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Badaddr PASSED (5 of 5)
+test Badaddr FAILED (0 of 5)
  (run on a filesystem with a bad direct address in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Badindir1 PASSED (5 of 5)
+test Badindir1 FAILED (0 of 5)
  (run on a filesystem with a bad indirect address in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Badfmt PASSED (5 of 5)
+test Badfmt FAILED (0 of 5)
  (run on a filesystem without . or .. directories)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Mrkfree PASSED (5 of 5)
+test Mrkfree FAILED (0 of 5)
  (run on a filesystem with an inuse direct block marked free)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Indirfree PASSED (5 of 5)
+test Indirfree FAILED (0 of 5)
  (run on a filesystem with an inuse indirect block marked free)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Mrkused PASSED (5 of 5)
+test Mrkused FAILED (0 of 5)
  (run on a filesystem with a free block marked used)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Addronce PASSED (5 of 5)
+test Addronce FAILED (0 of 5)
  (run on a filesystem with an address used more than once)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Imrkused PASSED (5 of 5)
+test Imrkused FAILED (0 of 5)
  (run with inode marked used, but not referenced in a directory)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Imrkfree PASSED (5 of 5)
+test Imrkfree FAILED (0 of 5)
  (run with inode marked free, but referenced in a directory)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Badrefcnt PASSED (5 of 5)
+test Badrefcnt FAILED (0 of 5)
  (run on fs which has an inode with a bad reference count)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Badindir2 PASSED (5 of 5)
+test Badindir2 FAILED (0 of 5)
  (run on a filesystem with a bad indirect address in an inode)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Dironce PASSED (5 of 5)
+test Dironce FAILED (0 of 5)
  (run on fs with a directory appearing more than once)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Goodrm PASSED (3 of 3)
+test Goodrm FAILED (0 of 3)
  (run on good fs with a file removed and a new directory created)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Goodrm2 PASSED (3 of 3)
+test Goodrm2 FAILED (0 of 3)
  (run on good fs with a new directory created and then a file removed)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Goodlink PASSED (3 of 3)
+test Goodlink FAILED (0 of 3)
  (run on good fs with some hard links and a linked file removed)
+ Unexpected exception [Errno 2] No such file or directory
 
-test Goodlarge PASSED (3 of 3)
+test Goodlarge FAILED (0 of 3)
  (run on large good fs)
+ Unexpected exception [Errno 2] No such file or directory
 
-Passed 23 of 23 tests.
-Overall 23 of 23
-Points 90 of 90
+Passed 1 of 23 tests.
+Overall 1 of 23
+Points 0 of 90
